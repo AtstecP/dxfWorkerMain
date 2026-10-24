@@ -32,7 +32,8 @@
         "net10.0-windows"
       ],
       "sources": {
-        "C:\\Users\\Atstec\\Documents\\Codex\\2026-10-24\\e-test-dsx-worker\\work\\empty-nuget": {}
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net10.0-windows": {

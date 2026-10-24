@@ -16,8 +16,8 @@ public class Form1 : Form
     private readonly Button set_folder_button = MakeButton("Выбрать папку", 252);
     private readonly Label label2 = new()
     {
-        Location = new Point(20, 429),
-        Size = new Size(380, 32),
+        Location = new Point(20, 454),
+        Size = new Size(380, 30),
         Text = "Корневая папка не выбрана",
         AutoEllipsis = true
     };
@@ -30,16 +30,38 @@ public class Form1 : Form
         Multiline = true,
         PlaceholderText = "Заказ_1; Заказ_2; Заказ_3"
     };
-    private readonly CheckBox deleteOriginalsCheckBox = new()
+    private readonly Label maxTextHeightLabel = new()
     {
         AutoSize = true,
         Location = new Point(20, 397),
+        Text = "Максимальная высота надписи:"
+    };
+    private readonly NumericUpDown maxTextHeightInput = new()
+    {
+        Location = new Point(250, 393),
+        Size = new Size(90, 27),
+        Minimum = 0.1m,
+        Maximum = 500m,
+        DecimalPlaces = 1,
+        Increment = 1m,
+        Value = 12m
+    };
+    private readonly Label textHeightUnitLabel = new()
+    {
+        AutoSize = true,
+        Location = new Point(346, 397),
+        Text = "мм"
+    };
+    private readonly CheckBox deleteOriginalsCheckBox = new()
+    {
+        AutoSize = true,
+        Location = new Point(20, 423),
         Text = "Удалить исходные DXF после успешной обработки",
         Checked = false
     };
     private readonly ProgressBar progressBar = new()
     {
-        Location = new Point(20, 468),
+        Location = new Point(20, 489),
         Size = new Size(380, 20),
         Minimum = 0,
         Maximum = 100,
@@ -48,25 +70,34 @@ public class Form1 : Form
     private readonly Label progressLabel = new()
     {
         AutoSize = false,
-        Location = new Point(20, 493),
-        Size = new Size(380, 36),
+        Location = new Point(20, 514),
+        Size = new Size(380, 22),
         Text = "Готово к работе"
     };
+    private readonly Label errorLogLabel = new() { AutoSize = true, Location = new Point(20, 544), Text = "Ошибки и предупреждения:" };
+    private readonly Button clearErrorsButton = new() { Location = new Point(305, 539), Size = new Size(95, 27), Text = "Очистить" };
+    private readonly ListBox errorLogListBox = new() { Location = new Point(20, 570), Size = new Size(380, 95), IntegralHeight = false, HorizontalScrollbar = true };
     private readonly Control[] inputControls;
 
     public Form1()
     {
         Text = "DXF Worker";
-        ClientSize = new Size(420, 535);
+        ClientSize = new Size(420, 680);
         foreach (Button button in new[] { UN, U, T, PLas, KL }) button.Click += change_Folder;
         set_folder_button.Click += set_Folder;
         buton_Enter.Click += button_Enter;
+        clearErrorsButton.Click += (_, _) => errorLogListBox.Items.Clear();
         Controls.AddRange(new Control[]
         {
             buton_Enter, textBox1, label2, set_folder_button, KL, PLas, T, U, UN,
-            label1, folderNamesTextBox, deleteOriginalsCheckBox, progressBar, progressLabel
+            label1, folderNamesTextBox, maxTextHeightLabel, maxTextHeightInput, textHeightUnitLabel,
+            deleteOriginalsCheckBox, progressBar, progressLabel, errorLogLabel, clearErrorsButton, errorLogListBox
         });
-        inputControls = new Control[] { UN, U, T, PLas, KL, set_folder_button, buton_Enter, textBox1, folderNamesTextBox, deleteOriginalsCheckBox };
+        inputControls = new Control[]
+        {
+            UN, U, T, PLas, KL, set_folder_button, buton_Enter, textBox1,
+            folderNamesTextBox, maxTextHeightInput, deleteOriginalsCheckBox
+        };
     }
 
     private static Button MakeButton(string text, int y) => new()
@@ -103,7 +134,7 @@ public class Form1 : Form
         string root = label2.Text;
         if (!Directory.Exists(root))
         {
-            ShowError("Сначала выберите существующую корневую папку кнопкой «Выбрать папку».");
+            ShowError("Сначала выберите существующую корневую папку.");
             return;
         }
 
@@ -120,7 +151,7 @@ public class Form1 : Form
             .ToArray();
         if (names.Length == 0)
         {
-            ShowError("Введите хотя бы одно название папки. Несколько названий разделяйте точкой с запятой.");
+            ShowError("Введите хотя бы одно название папки. Названия разделяйте точкой с запятой.");
             return;
         }
         foreach (string name in names)
@@ -157,9 +188,10 @@ public class Form1 : Form
         }
 
         bool deleteOriginals = deleteOriginalsCheckBox.Checked;
+        double maximumTextHeight = (double)maxTextHeightInput.Value;
         int totalWork = names.Length * (copiedFileCount + dxfFileCount);
         int completedWork = 0;
-        var progress = new Progress<ProgressUpdate>(update =>
+        IProgress<ProgressUpdate> progress = new Progress<ProgressUpdate>(update =>
         {
             progressBar.Value = Math.Clamp(update.Percent, progressBar.Minimum, progressBar.Maximum);
             progressLabel.Text = update.Message;
@@ -172,7 +204,7 @@ public class Form1 : Form
         {
             await Task.Run(() =>
             {
-                foreach ((string destination, int index) in destinations.Select((path, i) => (path, i + 1)))
+                foreach (string destination in destinations)
                 {
                     string name = Path.GetFileName(destination);
                     CopyFolder(source, destination, copiedFile =>
@@ -181,11 +213,16 @@ public class Form1 : Form
                         Report($"Копирование {name}: {Path.GetFileName(copiedFile)}");
                     });
 
-                    markDXFBase.Convert(new[] { destination }, inputFile =>
-                    {
-                        completedWork++;
-                        Report($"Обработка {name}: {Path.GetFileName(inputFile)}");
-                    });
+                    markDXFBase.Convert(
+                        new[] { destination },
+                        maximumTextHeight,
+                        inputFile =>
+                        {
+                            completedWork++;
+                            Report($"Обработка {name}: {Path.GetFileName(inputFile)}");
+                        },
+                        OfferLegacyPlacement);
+
                     string convertedFolder = Path.Combine(destination, $"CypCut_{name}");
                     int convertedCount = Directory.Exists(convertedFolder)
                         ? Directory.GetFiles(convertedFolder, "*.dxf").Length
@@ -203,7 +240,7 @@ public class Form1 : Form
                 void Report(string message)
                 {
                     int percent = totalWork == 0 ? 100 : completedWork * 100 / totalWork;
-                    ((IProgress<ProgressUpdate>)progress).Report(new ProgressUpdate(percent, message));
+                    progress.Report(new ProgressUpdate(percent, message));
                 }
             });
 
@@ -218,6 +255,15 @@ public class Form1 : Form
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
         }
+        catch (OperationCanceledException exception)
+        {
+            progressLabel.Text = "Обработка остановлена.";
+            MessageBox.Show(
+                $"{exception.Message}\n\nИсходные DXF сохранены. Проверьте созданные папки перед повторным запуском.",
+                "Обработка остановлена",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+        }
         catch (Exception exception)
         {
             progressLabel.Text = "Ошибка обработки. Проверьте результат.";
@@ -227,6 +273,20 @@ public class Form1 : Form
         {
             SetBusy(false);
         }
+    }
+
+    private bool OfferLegacyPlacement(string filePath, string reason)
+    {
+        AddLogEntry("Предупреждение", $"Не найдено место для надписи в {Path.GetFileName(filePath)}: {reason}");
+        bool Ask() => MessageBox.Show(
+            this,
+            $"Не удалось найти место для надписи: {reason}.\nФайл: {Path.GetFileName(filePath)}\n\n" +
+            "Использовать старый способ размещения по габаритам чертежа? Он может поставить надпись за пределами контура.",
+            "Не удалось разместить надпись",
+            MessageBoxButtons.YesNo,
+            MessageBoxIcon.Warning) == DialogResult.Yes;
+
+        return InvokeRequired ? (bool)Invoke((Func<bool>)Ask) : Ask();
     }
 
     private static int CountFiles(string directory) =>
@@ -251,18 +311,37 @@ public class Form1 : Form
         UseWaitCursor = busy;
     }
 
-    private static void ShowError(string message) => MessageBox.Show(
-        message, "DXF Worker", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    private void ShowError(string message)
+    {
+        AddLogEntry("Ошибка", message.Replace(Environment.NewLine, " "));
+        MessageBox.Show(message, "DXF Worker", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    }
+
+    private void AddLogEntry(string category, string message)
+    {
+        if (InvokeRequired)
+        {
+            BeginInvoke(new Action(() => AddLogEntry(category, message)));
+            return;
+        }
+
+        errorLogListBox.Items.Add($"[{DateTime.Now:HH:mm:ss}] {category}: {message}");
+        errorLogListBox.TopIndex = errorLogListBox.Items.Count - 1;
+    }
 
     private void set_Folder(object? sender, EventArgs e)
     {
         using FolderBrowserDialog dialog = new();
-        if (dialog.ShowDialog() == DialogResult.OK)
-            label2.Text = dialog.SelectedPath;
+        if (dialog.ShowDialog() != DialogResult.OK)
+            return;
+
+        label2.Text = dialog.SelectedPath;
     }
 
     private sealed record ProgressUpdate(int Percent, string Message);
 }
+
+
 
 
 

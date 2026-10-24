@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("dxfWorker")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+07ade4ad8840985be2fb6eb10ef7feca569cb7e9")]
 [assembly: System.Reflection.AssemblyProductAttribute("dxfWorker")]
 [assembly: System.Reflection.AssemblyTitleAttribute("dxfWorker")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

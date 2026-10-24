@@ -7,24 +7,14 @@ namespace dxfWorker;
 
 internal static class markDXFBase
 {
-    public static void Convert(string[] args)
+    public static void Convert(string[] args, Action<string>? onFileProcessed = null)
     {
         if (args.Length == 0)
-        {
-            Console.WriteLine("Укажите папку с файлами DXF");
-            Console.Write("Для выхода нажмите Enter...");
-            Console.Read();
-            return;
-        }
+            throw new ArgumentException("Не указана папка с файлами DXF.", nameof(args));
 
         string? folder = args.ElementAtOrDefault(0);
         if (!Directory.Exists(folder))
-        {
-            Console.WriteLine("Указанная папка '{0}' не существует.", folder);
-            Console.Write("Для выхода нажмите Enter...");
-            Console.Read();
-            return;
-        }
+            throw new DirectoryNotFoundException($"Папка не существует: {folder}");
 
         DxfVersion version = DxfVersion.AutoCad2004;
         switch (args.ElementAtOrDefault(1))
@@ -37,34 +27,23 @@ internal static class markDXFBase
 
         string[] files = Directory.GetFiles(folder, "*.dxf");
         if (files.Length == 0)
-        {
-            Console.WriteLine("В папке {0} нет DXF-файлов.", folder);
-            Console.Write("Для выхода нажмите Enter...");
-            Console.Read();
-            return;
-        }
+            throw new InvalidOperationException($"В папке нет DXF-файлов: {folder}");
 
         string name = Directory.GetParent(files.First())!.Name;
         string outputFolder = Path.Combine(folder, "CypCut_" + name);
-        if (!Directory.Exists(outputFolder)) Directory.CreateDirectory(outputFolder);
+        Directory.CreateDirectory(outputFolder);
 
         foreach (string inputFile in files)
         {
-            if (!File.Exists(inputFile))
-            {
-                Console.WriteLine("Файл '{0}' не существует.", inputFile);
-                continue;
-            }
-
             string stem = Path.GetFileNameWithoutExtension(inputFile);
             string extension = Path.GetExtension(inputFile);
-            string outputFile = $"{outputFolder}\\{stem}_({name}){extension}";
+            string outputFile = Path.Combine(outputFolder, $"{stem}_({name}){extension}");
             List<double> x = new();
             List<double> y = new();
             DxfDocument? document = DxfDocument.Load(inputFile);
             if (document == null)
             {
-                Console.WriteLine("Ошибка загрузки DXF-файла {0}", Path.GetFileName(inputFile));
+                onFileProcessed?.Invoke(inputFile);
                 continue;
             }
 
@@ -84,7 +63,11 @@ internal static class markDXFBase
                 y.Add(arc.Center.Y - arc.Radius);
             }
 
-            if (x.Count == 0 || y.Count == 0) continue;
+            if (x.Count == 0 || y.Count == 0)
+            {
+                onFileProcessed?.Invoke(inputFile);
+                continue;
+            }
 
             Text label = new(name)
             {
@@ -113,6 +96,7 @@ internal static class markDXFBase
             label.Rotation = height > width ? 90.0 : 0.0;
             document.Entities.Add(label);
             document.Save(outputFile);
+            onFileProcessed?.Invoke(inputFile);
         }
     }
 }

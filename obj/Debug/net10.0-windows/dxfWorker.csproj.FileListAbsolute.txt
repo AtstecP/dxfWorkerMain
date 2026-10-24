@@ -1,0 +1,17 @@
+C:\Users\Atstec\Documents\Codex\2026-10-24\e-test-dsx-worker\reverse_engineered_dxfWorker\bin\Debug\net10.0-windows\dxfWorker.exe
+C:\Users\Atstec\Documents\Codex\2026-10-24\e-test-dsx-worker\reverse_engineered_dxfWorker\bin\Debug\net10.0-windows\dxfWorker.deps.json
+C:\Users\Atstec\Documents\Codex\2026-10-24\e-test-dsx-worker\reverse_engineered_dxfWorker\bin\Debug\net10.0-windows\dxfWorker.runtimeconfig.json
+C:\Users\Atstec\Documents\Codex\2026-10-24\e-test-dsx-worker\reverse_engineered_dxfWorker\bin\Debug\net10.0-windows\dxfWorker.dll
+C:\Users\Atstec\Documents\Codex\2026-10-24\e-test-dsx-worker\reverse_engineered_dxfWorker\bin\Debug\net10.0-windows\dxfWorker.pdb
+C:\Users\Atstec\Documents\Codex\2026-10-24\e-test-dsx-worker\reverse_engineered_dxfWorker\bin\Debug\net10.0-windows\netDxf.dll
+C:\Users\Atstec\Documents\Codex\2026-10-24\e-test-dsx-worker\reverse_engineered_dxfWorker\obj\Debug\net10.0-windows\dxfWorker.csproj.AssemblyReference.cache
+C:\Users\Atstec\Documents\Codex\2026-10-24\e-test-dsx-worker\reverse_engineered_dxfWorker\obj\Debug\net10.0-windows\dxfWorker.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Atstec\Documents\Codex\2026-10-24\e-test-dsx-worker\reverse_engineered_dxfWorker\obj\Debug\net10.0-windows\dxfWorker.AssemblyInfoInputs.cache
+C:\Users\Atstec\Documents\Codex\2026-10-24\e-test-dsx-worker\reverse_engineered_dxfWorker\obj\Debug\net10.0-windows\dxfWorker.AssemblyInfo.cs
+C:\Users\Atstec\Documents\Codex\2026-10-24\e-test-dsx-worker\reverse_engineered_dxfWorker\obj\Debug\net10.0-windows\dxfWorker.csproj.CoreCompileInputs.cache
+C:\Users\Atstec\Documents\Codex\2026-10-24\e-test-dsx-worker\reverse_engineered_dxfWorker\obj\Debug\net10.0-windows\dxfWorker.csproj.Up2Date
+C:\Users\Atstec\Documents\Codex\2026-10-24\e-test-dsx-worker\reverse_engineered_dxfWorker\obj\Debug\net10.0-windows\dxfWorker.dll
+C:\Users\Atstec\Documents\Codex\2026-10-24\e-test-dsx-worker\reverse_engineered_dxfWorker\obj\Debug\net10.0-windows\refint\dxfWorker.dll
+C:\Users\Atstec\Documents\Codex\2026-10-24\e-test-dsx-worker\reverse_engineered_dxfWorker\obj\Debug\net10.0-windows\dxfWorker.pdb
+C:\Users\Atstec\Documents\Codex\2026-10-24\e-test-dsx-worker\reverse_engineered_dxfWorker\obj\Debug\net10.0-windows\dxfWorker.genruntimeconfig.cache
+C:\Users\Atstec\Documents\Codex\2026-10-24\e-test-dsx-worker\reverse_engineered_dxfWorker\obj\Debug\net10.0-windows\ref\dxfWorker.dll

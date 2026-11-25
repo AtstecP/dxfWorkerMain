@@ -6,6 +6,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="tools\**" />
+    <EmbeddedResource Remove="tools\**" />
+    <None Remove="tools\**" />
+  </ItemGroup>
   <ItemGroup><Reference Include="netDxf"><HintPath>lib\netDxf.dll</HintPath></Reference></ItemGroup>
 </Project>
 

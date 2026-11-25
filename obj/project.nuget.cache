@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "svRAwOJdbCk=",
+  "dgSpecHash": "xdFvjbKHPFo=",
   "success": true,
   "projectFilePath": "C:\\Users\\Atstec\\Documents\\Codex\\2026-10-24\\e-test-dsx-worker\\reverse_engineered_dxfWorker\\dxfWorker.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Atstec\\.nuget\\packages\\microsoft.net.illink.tasks\\10.0.13\\microsoft.net.illink.tasks.10.0.13.nupkg.sha512",
+    "C:\\Users\\Atstec\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\10.0.13\\microsoft.netcore.app.runtime.win-x64.10.0.13.nupkg.sha512",
+    "C:\\Users\\Atstec\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\10.0.13\\microsoft.windowsdesktop.app.runtime.win-x64.10.0.13.nupkg.sha512",
+    "C:\\Users\\Atstec\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\10.0.13\\microsoft.aspnetcore.app.runtime.win-x64.10.0.13.nupkg.sha512"
+  ],
   "logs": []
 }

@@ -1,0 +1,4 @@
+# License private key: NEVER commit
+tools/KeyGen/private.key
+tools/KeyGen/bin/
+tools/KeyGen/obj/

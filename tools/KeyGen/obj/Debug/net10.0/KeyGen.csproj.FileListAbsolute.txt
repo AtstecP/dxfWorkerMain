@@ -1,0 +1,15 @@
+C:\Users\Atstec\Documents\Codex\2026-10-24\e-test-dsx-worker\reverse_engineered_dxfWorker\tools\KeyGen\bin\Debug\net10.0\KeyGen.exe
+C:\Users\Atstec\Documents\Codex\2026-10-24\e-test-dsx-worker\reverse_engineered_dxfWorker\tools\KeyGen\bin\Debug\net10.0\KeyGen.deps.json
+C:\Users\Atstec\Documents\Codex\2026-10-24\e-test-dsx-worker\reverse_engineered_dxfWorker\tools\KeyGen\bin\Debug\net10.0\KeyGen.runtimeconfig.json
+C:\Users\Atstec\Documents\Codex\2026-10-24\e-test-dsx-worker\reverse_engineered_dxfWorker\tools\KeyGen\bin\Debug\net10.0\KeyGen.dll
+C:\Users\Atstec\Documents\Codex\2026-10-24\e-test-dsx-worker\reverse_engineered_dxfWorker\tools\KeyGen\bin\Debug\net10.0\KeyGen.pdb
+C:\Users\Atstec\Documents\Codex\2026-10-24\e-test-dsx-worker\reverse_engineered_dxfWorker\tools\KeyGen\obj\Debug\net10.0\KeyGen.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Atstec\Documents\Codex\2026-10-24\e-test-dsx-worker\reverse_engineered_dxfWorker\tools\KeyGen\obj\Debug\net10.0\KeyGen.AssemblyInfoInputs.cache
+C:\Users\Atstec\Documents\Codex\2026-10-24\e-test-dsx-worker\reverse_engineered_dxfWorker\tools\KeyGen\obj\Debug\net10.0\KeyGen.AssemblyInfo.cs
+C:\Users\Atstec\Documents\Codex\2026-10-24\e-test-dsx-worker\reverse_engineered_dxfWorker\tools\KeyGen\obj\Debug\net10.0\KeyGen.csproj.CoreCompileInputs.cache
+C:\Users\Atstec\Documents\Codex\2026-10-24\e-test-dsx-worker\reverse_engineered_dxfWorker\tools\KeyGen\obj\Debug\net10.0\KeyGen.sourcelink.json
+C:\Users\Atstec\Documents\Codex\2026-10-24\e-test-dsx-worker\reverse_engineered_dxfWorker\tools\KeyGen\obj\Debug\net10.0\KeyGen.dll
+C:\Users\Atstec\Documents\Codex\2026-10-24\e-test-dsx-worker\reverse_engineered_dxfWorker\tools\KeyGen\obj\Debug\net10.0\refint\KeyGen.dll
+C:\Users\Atstec\Documents\Codex\2026-10-24\e-test-dsx-worker\reverse_engineered_dxfWorker\tools\KeyGen\obj\Debug\net10.0\KeyGen.pdb
+C:\Users\Atstec\Documents\Codex\2026-10-24\e-test-dsx-worker\reverse_engineered_dxfWorker\tools\KeyGen\obj\Debug\net10.0\KeyGen.genruntimeconfig.cache
+C:\Users\Atstec\Documents\Codex\2026-10-24\e-test-dsx-worker\reverse_engineered_dxfWorker\tools\KeyGen\obj\Debug\net10.0\ref\KeyGen.dll
